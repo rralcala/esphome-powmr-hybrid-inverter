@@ -1,23 +1,13 @@
-# ESPHome PowMr Hybrid Inverter
+# ESPHome SRNE Hybrid Inverter
+Based on:
 ESPHome config for various PowMr Hybrid Inverter models.
 
 ## Compatibility
-All models that are supported by the [**WIFI-VM**](https://powmr.com/products/powmr-wifi-module-with-rs232-remote-monitoring-solution-wifi-vm) device should work:
-
-- [**POW-HVM1.5H-12V**](https://powmr.com/products/all-in-one-inverter-charger-1500watt-220vac-12vdc)
-- **POW-HVM2.0H-12V**
-- [**POW-HVM2.4H-24V**](https://web.archive.org/web/20230329235125/https://powmr.com/inverters/all-in-one-inverter-chargers/powmr-2400watt-dc-24v-ac-220v-solar-inverter-charger)
-- [**POW-HVM3.2H-24V**](https://powmr.com/products/all-in-one-inverter-charger-3000w-220vac-24vdc)
-- [**POW-HVM3.6M-24V**](https://powmr.com/products/hybrid-inverter-charger-3600w-220vac-24vdc)
-- [**POW-HVM4.2M-24V**](https://powmr.com/products/hybrid-inverter-charger-4200w-220vac-24vdc)
-- [**POW-HVM6.2M-48V**](https://powmr.com/products/hybrid-inverter-charger-6200w-220vac-48vdc)
-- [**POW-HVM8.2M**](https://powmr.com/products/hybrid-inverter-charger-8000w-220vac-48vdc)
-- [**POW-HVM10.2M**](https://powmr.com/products/hybrid-inverter-charger-10200w-200vac-48vdc)
+All models with the same boxy shape or SRNE Modbus protocol V1.7 
 
 ### Tested models
 
-- **POW-HVM2.4H-24V**
-- **POW-HVM10.2M**
+- **HF48xxxxx-xxx**
 
 ## Connection
 ![PowMr ESP32 connection diagram](images/powmr_esp32_connection.png "PowMr ESP32 connection diagram")
@@ -41,7 +31,7 @@ There are 2 versions of PCB design available. Advanced version is more compact b
 - Docs for [Advanced PCB](pcb/advanced/README.md) by [@davidebeatrici](https://github.com/davidebeatrici)
 
 ## PZEM module
-In version 1.2, a [PZEM](https://esphome.io/components/sensor/pzem004t) module was added for measuring parameters of the input AC grid. If you do not wish to use it, comment out the include of the corresponding module in the [main.yaml](/src/main.yaml) file.
+Support removed.
 
 ## Inverter card
 For easy integration into Home Assistant, you can use the [following snippet](/examples/inverter-card-example.yaml). It compiles all the essential inverter sensors and controls in a compact manner. 
@@ -108,13 +98,15 @@ You will see gaps in register ranges map. To calculate `register_count`, you nee
 - Read registers are using little-endian format that doesn't have a native support in ESPHome, so we need a custom function to swap bytes.
 - Inverter UART pins (TX2 & RX2) are swapped https://github.com/odya/esphome-powmr-hybrid-inverter/issues/25
 - Manuals:
-  - [POW-HVM1.5H-12V](docs/POW-HVM2.4H-24V.pdf)
+  - [SRNE-hybrid-solar-MODBUS-V170](docs/SRNE-hybrid-solar-MODBUS-V170.pdf)
   - [POW-HVM2.4H-24V](docs/POW-HVM2.4H-24V.pdf)
   - [POW-HVM2.0H-12V](docs/POW-HVM3.2H-24V.pdf)
   - [POW-HVM3.2H-24V](docs/POW-HVM3.2H-24V.pdf)
   - [POW-HVM10.2M](docs/POW-HVM10.2M.pdf)
 
 ## References & thanks
+- https://github.com/odya/esphome-powmr-hybrid-inverter
+  Forked from ^^
 - https://github.com/leodesigner/powmr_comm 
   Great research on PowMr registers and C++ firmware code with MQTT. Thanks to author, it helps me a lot.
 - https://github.com/syssi/esphome-smg-ii

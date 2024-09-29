@@ -10,6 +10,7 @@ wifi:
 ota:
   id: "${node_id}_ota"
   password: !secret ota_password
+  platform: esphome
 
 api:
   reboot_timeout: 10min
