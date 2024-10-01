@@ -189,101 +189,7 @@ sensor:
     filters:
       - multiply: 0.01
 
-    #
-#   - platform: template
-#     name: "Battery Power"
-#     unit_of_measurement: "W"
-#     device_class: power
-#     state_class: measurement
-#     accuracy_decimals: 0
-#     update_interval: ${update_interval}
-#     lambda: |-
-#       return id(battery_current).state * id(battery_voltage).state;
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Load Voltage"
-#     id: load_voltage
-#     address: 4510
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "V"
-#     device_class: voltage
-#     state_class: measurement
-#     accuracy_decimals: 1
-#     lambda: |-
-#       return swapBytes(x);
-#     filters:
-#       - multiply: 0.1
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Load Frequency"
-#     address: 4511
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "Hz"
-#     device_class: frequency
-#     state_class: measurement
-#     accuracy_decimals: 1
-#     lambda: |-
-#       return swapBytes(x);
-#     filters:
-#       - multiply: 0.1
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Load Power Internal"
-#     id: load_power_internal
-#     internal: true
-#     address: 4512
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "W"
-#     device_class: power
-#     state_class: measurement
-#     accuracy_decimals: 0
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: template
-#     name: "Load Power"
-#     id: load_power
-#     unit_of_measurement: "W"
-#     device_class: power
-#     state_class: measurement
-#     accuracy_decimals: 0
-#     update_interval: 10s
-#     lambda: |-
-#       return id(load_current).state * id(load_voltage).state;
-#
-#   - platform: template
-#     name: "Load Current"
-#     id: load_current
-#     unit_of_measurement: "A"
-#     device_class: current
-#     state_class: measurement
-#     accuracy_decimals: 3
-#     update_interval: ${update_interval}
-#     lambda: |-
-#       if (id(load_voltage).state == 0) {
-#         return 0;
-#       }
-#       return id(load_va).state / id(load_voltage).state;
-#
-#   - platform: template
-#     name: "Load Power Factor"
-#     id: load_power_factor
-#     device_class: power_factor
-#     state_class: measurement
-#     accuracy_decimals: 2
-#     update_interval: ${update_interval}
-#     lambda: |-
-#       if (id(load_va).state == 0) {
-#         return 0;
-#       }
-#       return id(load_power).state / id(load_va).state;
-#
+
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
     name: "Load VA"
@@ -330,102 +236,47 @@ sensor:
     unit_of_measurement: "%"
     device_class: power_factor
     state_class: measurement
-#
-#   # 4535 -> binary
-#
-#   # 4536 -> text
-#
-#   # 4537 -> text
-#
-#   # 4538 -> text
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Target Output Frequency"
-#     accuracy_decimals: 0
-#     entity_category: diagnostic
-#     address: 4540
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "Hz"
-#     lambda: |-
-#       uint16_t value = swapBytes(x);
-#       switch (value) {
-#         case 0: return std::uint16_t(50);
-#         case 1: return std::uint16_t(60);
-#         default: return x;
-#       }
-#
 
-#    unit_of_measurement: "A"
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Max Total Charging Current"
-#     accuracy_decimals: 0
-#     entity_category: diagnostic
-#     address: 4541
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "A"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Target Output Voltage"
-#     accuracy_decimals: 0
-#     entity_category: diagnostic
-#     address: 4542
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "V"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Max Utility Charging Current"
-#     accuracy_decimals: 0
-#     entity_category: diagnostic
-#     address: 4543
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "A"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Back To Utility Source Voltage"
-#     filters:
-#       - multiply: 0.1
-#     accuracy_decimals: 1
-#     entity_category: diagnostic
-#     address: 4544
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "V"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Back To Battery Source Voltage"
-#     filters:
-#       - multiply: 0.1
-#     accuracy_decimals: 1
-#     entity_category: diagnostic
-#     address: 4545
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "V"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   # ####################################
-#   # # Read second group (16 registers) #
-#   # ####################################
-#
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Inverter Temperature DC DC"
+    id: inverter_temperature_DCDC
+    address: 0x220
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Inverter Temperature DC AC"
+    id: inverter_temperature_DCAC
+    address: 0x221
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Inverter Temperature Translator"
+    id: inverter_temperature_translator
+    address: 0x222
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
     name: "Boost Charging Voltage"
@@ -437,9 +288,7 @@ sensor:
     register_type: holding
     value_type: U_WORD
     unit_of_measurement: "V"
-#     lambda: |-
-#       return swapBytes(x);
-#
+
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
     name: "Floating Charging Voltage"
@@ -452,76 +301,7 @@ sensor:
     value_type: U_WORD
     skip_updates: ${select_skip_updates}
     unit_of_measurement: "V"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Low CutOff Voltage"
-#     filters:
-#       - multiply: 0.1
-#     accuracy_decimals: 1
-#     entity_category: diagnostic
-#     address: 4548
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "V"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Battery Equalization Voltage"
-#     filters:
-#       - multiply: 0.1
-#     accuracy_decimals: 1
-#     entity_category: diagnostic
-#     address: 4549
-#     register_type: holding
-#     value_type: U_WORD
-#     unit_of_measurement: "V"
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Battery Equalized Time"
-#     accuracy_decimals: 0
-#     entity_category: diagnostic
-#     address: 4550
-#     register_type: holding
-#     value_type: U_WORD
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Battery Equalized Timeout"
-#     accuracy_decimals: 0
-#     entity_category: diagnostic
-#     address: 4551
-#     register_type: holding
-#     value_type: U_WORD
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     name: "Equalization Interval"
-#     accuracy_decimals: 0
-#     entity_category: diagnostic
-#     address: 4552
-#     register_type: holding
-#     value_type: U_WORD
-#     lambda: |-
-#       return swapBytes(x);
-#
-#   # 4553 -> binary
-#
-#   # 4554 -> binary
-#
-#   # 4555 -> text
-#
+
 # binary_sensor:
 #
 #   - platform: modbus_controller
@@ -539,14 +319,6 @@ sensor:
 #     address: 4535
 #     register_type: holding
 #     bitmask: 0x2
-#
-# #  - platform: modbus_controller
-# #    modbus_controller_id: smg_inverter
-# #    name: "Equalization Activated Immediately"
-# #    entity_category: diagnostic
-# #    address: 4535
-# #    register_type: holding
-# #    bitmask: 0x4
 #
 #   - platform: modbus_controller
 #     modbus_controller_id: smg_inverter
@@ -588,14 +360,6 @@ sensor:
 #     register_type: holding
 #     bitmask: 0x2000
 #
-#   # - platform: modbus_controller
-#   #   modbus_controller_id: smg_inverter
-#   #   name: "Return To Default Screen"
-#   #   entity_category: diagnostic
-#   #   address: 4535
-#   #   register_type: holding
-#   #   bitmask: 0x4000
-#
 #   - platform: modbus_controller
 #     modbus_controller_id: smg_inverter
 #     name: "Overload Bypass"
@@ -627,52 +391,6 @@ sensor:
 #     bitmask: 0x1
 #
 text_sensor:
-#
-#   - platform: modbus_controller
-#     modbus_controller_id: smg_inverter
-#     id: charger_source_priority_text
-#     name: "Charger Source Priority"
-#     entity_category: diagnostic
-#     address: 4536
-#     register_type: holding
-#     response_size: 2
-#     raw_encode: HEXBYTES
-#     lambda: |-
-#       uint16_t sensorIndex = swapBytes(modbus_controller::word_from_hex_str(x, 0));
-#       updateUnknownSelect(sensorIndex, id(charger_source_priority_select));
-#       switch (sensorIndex) {
-#         case 0: return std::string("Utility first");
-#         case 1: return std::string("Solar first");
-#         case 2: return std::string("Solar and Utility");
-#         case 3: return std::string("Only solar");
-#         default: return std::string(x);
-#       }
-#
-  # - platform: modbus_controller
-  #   modbus_controller_id: smg_inverter
-  #   name: "Output Source Priority"
-  #   entity_category: diagnostic
-  #   address: 4537
-  #   register_type: holding
-  #   response_size: 2
-  #   raw_encode: HEXBYTES
-  #   lambda: |-
-  #     uint16_t sensorIndex = swapBytes(modbus_controller::word_from_hex_str(x, 0));
-  #     updateUnknownSelect(sensorIndex, id(output_source_priority_select));
-  #     switch (sensorIndex) {
-  #       case 0: return std::string("Utility first (USB)");
-  #       case 1: return std::string("Solar first (SUB)");
-  #       case 2: return std::string("SBU priority");
-  #       default: return std::string(x);
-  #     }
-  # - platform: modbus_controller
-  #   modbus_controller_id: smg_inverter
-  #   name: "Protocol Version"
-  #   entity_category: diagnostic
-  #   address: 0x1C
-  #   register_type: holding
-  #   response_size: 4
-  #   raw_encode: HEXBYTES
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
     name: "AC Input Voltage Range"
