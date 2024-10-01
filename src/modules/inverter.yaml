@@ -29,69 +29,15 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
-    name: "Grid Voltage"
-    address: 0x213
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    state_class: measurement
-    accuracy_decimals: 1
-# grid_active
-      # if (!id(0).state) {
-      #   return 0.0;
-      # }
-    filters:
-      - multiply: 0.1
-#      - offset: ${inverter_voltage_offset}
-#      - heartbeat: 10s
-
-  - platform: modbus_controller
-    modbus_controller_id: smg_inverter
-    name: "Grid Frequency"
-    address: 0x215
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "Hz"
-    device_class: frequency
-    state_class: measurement
-    accuracy_decimals: 2
-    filters:
-      - multiply: 0.01
-  - platform: modbus_controller
-    modbus_controller_id: smg_inverter
-    name: "PV Voltage"
-    id: pv_voltage
-    address: 0x107
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-  - platform: modbus_controller
-    modbus_controller_id: smg_inverter
-    name: "PV Power"
-    id: pv_power
-    address: 0x109
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "W"
-    device_class: power
-    state_class: measurement
+    name: "Battery SoC"
     accuracy_decimals: 0
-  - platform: template
-    name: "PV Current"
-    id: pv_current
-    state_class: "measurement"
-    device_class: current
-    unit_of_measurement: "A"
-    accuracy_decimals: 1
-    icon: mdi:solar-power
-    lambda: |-
-      return id(pv_power).state / id(pv_voltage).state;
+    unit_of_measurement: "%"
+    device_class: battery
+    address: 0x100
+    register_type: holding
+    value_type: U_WORD
+    state_class: measurement
+
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
     name: "Battery Voltage"
@@ -107,18 +53,8 @@ sensor:
       - multiply: 0.1
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
-    name: "Battery SoC"
-    accuracy_decimals: 0
-    unit_of_measurement: "%"
-    device_class: battery
-    address: 0x100
-    register_type: holding
-    value_type: U_WORD
-    state_class: measurement
-  - platform: modbus_controller
-    modbus_controller_id: smg_inverter
     name: "Battery Current"
-    id: battery_charge_current
+    id: battery_current
     address: 0x102
     register_type: holding
     value_type: S_WORD
@@ -130,8 +66,32 @@ sensor:
       - multiply: 0.1
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
-    name: "Load Discharge Current"
-    id: battery_discharge_current
+    name: "Device Temperature"
+    id: device_temperature
+    address: 0x103
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 0
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Load DC voltage"
+    id: load_dc_voltage
+    address: 0x104
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Load DC Current"
+    id: load_dc_current
     address: 0x105
     register_type: holding
     value_type: U_WORD
@@ -141,8 +101,95 @@ sensor:
     accuracy_decimals: 2
     filters:
       - multiply: 0.01
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Load DC Power"
+    id: load_dc_power
+    address: 0x106
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "PV Voltage"
+    id: pv_voltage
+    address: 0x107
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "PV Current"
+    id: pv_current
+    address: 0x108
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "PV Power"
+    id: pv_power
+    address: 0x109
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Grid Voltage"
+    id: grid_voltage
+    address: 0x213
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Grid Current"
+    id: grid_current
+    address: 0x214
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Grid Frequency"
+    id: grid_frequency
+    address: 0x215
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "Hz"
+    device_class: frequency
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
 
-#
+    #
 #   - platform: template
 #     name: "Battery Power"
 #     unit_of_measurement: "W"
@@ -248,21 +295,41 @@ sensor:
     device_class: apparent_power
     state_class: measurement
     accuracy_decimals: 0
-#     lambda: |-
-#       return swapBytes(x);
-#
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Inverter DC Component"
+    id: inverter_dc_component
+    address: 0x21D
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "mV"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 0
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Mains Charge Current"
+    id: mains_charge_current
+    address: 0x21E
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
     name: "Load Percent"
+    id: load_phase_a
     address: 0x21F
-#    register_count: 21
     register_type: holding
     value_type: U_WORD
     unit_of_measurement: "%"
     device_class: power_factor
     state_class: measurement
-#     lambda: |-
-#       return swapBytes(x);
 #
 #   # 4535 -> binary
 #
@@ -666,55 +733,19 @@ text_sensor:
       }
 
 select:
-
   - platform: modbus_controller
-    name: "Buzzer Alarm"
+    name: "Nominal Battery Capacity"
     optimistic: true
     skip_updates: ${select_skip_updates}
     entity_category: config
-    address: 0xE210
+    address: 0xE002
     value_type: U_WORD
     optionsmap:
-      "Off": 0
-      "On": 1
-
-  - platform: modbus_controller
-    name: "Beep On Primary Source Fail"
-    optimistic: true
-    skip_updates: ${select_skip_updates}
-    entity_category: config
-    address: 0xE211
-    value_type: U_WORD
-    optionsmap:
-      "Off": 0
-      "On": 1
-
-  - platform: modbus_controller
-    name: "Overload Bypass"
-    optimistic: true
-    skip_updates: ${select_skip_updates}
-    entity_category: config
-    address: 0xE212
-    value_type: U_WORD
-    optionsmap:
-      "Off": 0
-      "On": 1
-
-  - platform: modbus_controller
-    id: charger_source_priority_select
-    name: "Charger Source Priority"
-    optimistic: true
-    skip_updates: ${select_skip_updates}
-    force_new_range: true
-    entity_category: config
-    address: 0xE20F
-    value_type: U_WORD
-    optionsmap:
-      "Solar first": 0
-      "Utility first": 1
-      "Solar and Utility": 2
-      "Only Solar": 3
-
+      "100": 100
+      "150": 150
+      "200": 200
+      "250": 250
+      "300": 300
   - platform: modbus_controller
     id: output_source_priority_select
     name: "Output Source Priority"
@@ -727,7 +758,21 @@ select:
       "Solar first (SUB)": 0
       "Utility first (USB)": 1
       "SBU priority": 2
-
+  - platform: modbus_controller
+    name: "Utility Charge Current"
+    optimistic: true
+    skip_updates: ${select_skip_updates}
+    entity_category: config
+    address: 0xE205
+    value_type: U_WORD
+    optionsmap:
+      "10": 100
+      "20": 200
+      "30": 300
+      "40": 400
+      "50": 500
+      "60": 600
+      "80": 800
   - platform: modbus_controller
     name: "Max Total Charge Current"
     optimistic: true
@@ -745,30 +790,47 @@ select:
       "70": 700
       "80": 800
   - platform: modbus_controller
-    name: "Nominal Battery Capacity"
+    id: charger_source_priority_select
+    name: "Charger Source Priority"
     optimistic: true
     skip_updates: ${select_skip_updates}
+    force_new_range: true
     entity_category: config
-    address: 0xE002
+    address: 0xE20F
     value_type: U_WORD
     optionsmap:
-      "100": 100
-      "150": 150
-      "200": 200
-      "250": 250
-      "300": 300
+      "Solar first": 0
+      "Utility first": 1
+      "Solar and Utility": 2
+      "Only Solar": 3
   - platform: modbus_controller
-    name: "Utility Charge Current"
+    name: "Buzzer Alarm"
     optimistic: true
     skip_updates: ${select_skip_updates}
     entity_category: config
-    address: 0xE205
+    address: 0xE210
     value_type: U_WORD
     optionsmap:
-      "10": 100
-      "20": 200
-      "30": 300
-      "40": 400
-      "50": 500
-      "60": 600
-      "80": 800
+      "Off": 0
+      "On": 1
+  - platform: modbus_controller
+    name: "Beep On Primary Source Fail"
+    optimistic: true
+    skip_updates: ${select_skip_updates}
+    entity_category: config
+    address: 0xE211
+    value_type: U_WORD
+    optionsmap:
+      "Off": 0
+      "On": 1
+  - platform: modbus_controller
+    name: "Overload Bypass"
+    optimistic: true
+    skip_updates: ${select_skip_updates}
+    entity_category: config
+    address: 0xE212
+    value_type: U_WORD
+    optionsmap:
+      "Off": 0
+      "On": 1
+
