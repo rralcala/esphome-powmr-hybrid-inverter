@@ -17,11 +17,6 @@ packages:
   common_system: !include examples/common_system.yaml
   common_sensors: !include examples/common_sensors.yaml
 
-logger:
-  level: WARN
-  logs:
-    component: ERROR # Fix for issue #4717 "Component xxxxxx took a long time for an operation"
-
 time:
   - platform: homeassistant
     id: hass_time

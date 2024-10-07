@@ -7,7 +7,13 @@ esphome:
   project:
     name: "odya.esphome-powmr-hybrid-inverter"
     version: 1.3.3
-
+  on_boot:
+    priority: -100
+    then:
+    - delay: 30s
+    - lambda: |-
+            esphome::modbus_controller::ModbusController *controller = id(smg_inverter);
+            setTime(controller);
 packages:
   inverter: !include {
     file: modules/inverter.yaml
@@ -15,4 +21,7 @@ packages:
 #  debug: !include modules/debug.yaml
 
 logger:
+  level: WARN
   baud_rate: 0
+  logs:
+    component: ERROR # Fix for issue #4717 "Component xxxxxx took a long time for an operation"
