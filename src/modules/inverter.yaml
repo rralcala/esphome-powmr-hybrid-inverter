@@ -300,6 +300,32 @@ sensor:
     unit_of_measurement: "V"
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
+    name: "Battery Charge Today"
+    id: inverter_battery_charge
+    address: 0xF02D
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    accuracy_decimals: 0
+    filters:
+      - multiply: 50
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
+    name: "Battery Discharge Today"
+    id: inverter_battery_discharge
+    address: 0xF02E
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    accuracy_decimals: 0
+    filters:
+      - multiply: 50
+  - platform: modbus_controller
+    modbus_controller_id: smg_inverter
     name: "PV Power Today"
     id: inverter_pv_power_today
     address: 0xF02F

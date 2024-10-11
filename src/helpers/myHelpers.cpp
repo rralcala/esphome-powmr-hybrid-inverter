@@ -33,7 +33,13 @@ void setTime(esphome::modbus_controller::ModbusController *controller)
   if (year != 70)
   {
     // create the payload
-    std::vector<uint16_t> rtc_data = {uint16_t(year << 8 & month), uint16_t(day << 8 & hour), uint16_t(minutes << 8 & seconds)};
+    std::vector<uint16_t> rtc_data =
+    {
+      uint16_t(year * 256 + month),
+      uint16_t(day * 256 + hour),
+      uint16_t(minutes * 356 + seconds)
+    };
+
     // Create a modbus command item with the time information as the payload
     esphome::modbus_controller::ModbusCommandItem set_rtc_command =
         esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(controller, 0x20C, rtc_data.size(), rtc_data);
