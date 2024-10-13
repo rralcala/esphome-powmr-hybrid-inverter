@@ -10,7 +10,7 @@ All models with the same boxy shape or SRNE Modbus protocol V1.7
 - **HF48xxxxx-xxx**
 
 ## Connection
-![PowMr ESP32 connection diagram](images/powmr_esp32_connection.png "PowMr ESP32 connection diagram")
+TBD connect RS485-1 to a RS485 bridge module to an ESP32 board.
 
 ## ESP8266
 This configuration can be used on the ESP8266, but you won't be able to use all the sensors due to the memory limitations of the ESP8266. 
@@ -24,11 +24,6 @@ Looks like minimum heap size, that ensures stability, is near 6Kb. Although I st
 4) Create file `powmr-inverter.yaml` in the esphome config directory root and copy contents of [example config](/examples/powmr-inverter.yaml)
 5) Edit substitutions & customize `powmr-inverter.yaml`. You can add contents of [common_system](/examples/common_system.yaml) & [common_sensors](/examples/common_sensors.yaml) to this file or include them separately following the example.
 6) Flash firmware to your ESP32
-
-## PCB`s
-There are 2 versions of PCB design available. Advanced version is more compact but needs SMD soldering skills, basic version uses 2.54 parts & modular approach. 
-- Docs for [Basic PCB](pcb/basic/README.md)
-- Docs for [Advanced PCB](pcb/advanced/README.md) by [@davidebeatrici](https://github.com/davidebeatrici)
 
 ## PZEM module
 Support removed.
@@ -99,10 +94,6 @@ You will see gaps in register ranges map. To calculate `register_count`, you nee
 - Inverter UART pins (TX2 & RX2) are swapped https://github.com/odya/esphome-powmr-hybrid-inverter/issues/25
 - Manuals:
   - [SRNE-hybrid-solar-MODBUS-V170](docs/SRNE-hybrid-solar-MODBUS-V170.pdf)
-  - [POW-HVM2.4H-24V](docs/POW-HVM2.4H-24V.pdf)
-  - [POW-HVM2.0H-12V](docs/POW-HVM3.2H-24V.pdf)
-  - [POW-HVM3.2H-24V](docs/POW-HVM3.2H-24V.pdf)
-  - [POW-HVM10.2M](docs/POW-HVM10.2M.pdf)
 
 ## References & thanks
 - https://github.com/odya/esphome-powmr-hybrid-inverter
